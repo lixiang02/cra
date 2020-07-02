@@ -158,8 +158,8 @@ customizeCra.customBabelLoaderInclude = (includePathArray=[]) => config => {
           item.include = [item.include]
         }
         for (const babelIncluedPath of includePathArray) {
-          const incluePath = path.resolve(paths.appPath, babelIncluedPath)
-          item.include.push(incluePath)
+          // const incluePath = path.resolve(paths.appPath, babelIncluedPath)
+          item.include.push(babelIncluedPath)
         }
     }
   }
