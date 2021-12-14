@@ -1,6 +1,7 @@
 const customizeCra = require("customize-cra")
 const path = require('path')
 const paths = require('react-scripts/config/paths')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 const {
   disableChunk,
@@ -176,6 +177,24 @@ customizeCra.customProxyConfig = (proxy) => config => {
     ...config,
     proxy
   }
+}
+
+customizeCra.miniCssExtractPluginReplace = (options = {}) => config => {
+  if (config && config.plugins && config.plugins.length) {
+    for(let i = 0; i < config.plugins.length; i++) {
+      if (config.plugins[i] instanceof MiniCssExtractPlugin) {
+        config.plugins[i] = new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          ignoreOrder: true,
+          filename: 'static/css/[name].[contenthash:8].css',
+          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+          ...options
+        })
+      }
+    }
+  }
+  return config
 }
 
 module.exports = customizeCra
